@@ -9,12 +9,16 @@ import com.Test.table.User;
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.Test.Tools.*;
-
+@RunWith(SpringJUnit4ClassRunner.class) // = extends SpringJUnit4ClassRunner
+@ContextConfiguration(locations = {"classpath:applicationContext.xml","classpath:spring.xml"})
 public class SpringTest {
       /**
                    * 测试 SpringIOC依赖注入  mybatis用法
@@ -24,14 +28,18 @@ public class SpringTest {
        *         <li>功能说明：使用list的循环</li>
        *         </p>
        */
-      @Test
-    public void  Test(){
-          ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
-          UserService userService = ac.getBean("userService", UserService.class);
-          List<User> lst = userService.findAll();
-          System.out.println(lst);
-          
-      }
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private UserDao  userDao;
+      /**
+       * 测试sqlSessionTemplate
+       * @Author pansw
+       *         <p>
+       *         <li>2020年2月22日-下午8:57:45</li>
+       *         <li>功能说明：使用list的循环</li>
+       *         </p>
+       */
       @Test
       public void test1() {
     	  ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
@@ -43,12 +51,20 @@ public class SpringTest {
       }
       @Test
       public void test2() {
-    	  ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
-    	  UserDao  userDao=  ac.getBean(UserDao.class);
     	  List<User> lst = userDao.findAll();
     	  System.out.println(lst);
       }
 
-
+      @Test
+      public void  Test3(){
+  		/*
+  		 * ApplicationContext ac = new
+  		 * ClassPathXmlApplicationContext("applicationContext.xml"); UserService
+  		 * userService = ac.getBean("userService", UserService.class);
+  		 */
+            List<User> lst = userService.findAll();
+            System.out.println(lst);
+            
+        }
 
 }

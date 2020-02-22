@@ -35,12 +35,10 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
          mybatis执行器，取值范围是SIMPLE/REUSE/BATCH三种类型
          <constructor-arg value="SIMPLE" />
  </bean> -->
-    <!--  <bean id="userDao" class="com.Test.daoImpl.UserDaoImpl">
-       <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
-     </bean> -->
-      <bean id="mySqlSessionTemplate" class="com.Test.Tools.MySqlSessionTemplate">
+     <bean id="userDao" class="com.Test.daoImpl.UserDaoImpl">
        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
      </bean>
+    
     <!--配置dao接口扫描 -->
    <!-- <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
          <property name="basePackage" value="com.Test.dao"></property>

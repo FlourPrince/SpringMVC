@@ -5,7 +5,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 public class MySqlSessionTemplate {
 	private SqlSessionTemplate template ;
-	private SqlSessionFactory sqlSessionFactory;
 	public SqlSessionTemplate getSqlSessionTemplate() {
 		return template;
 	}

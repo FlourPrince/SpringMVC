@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.Test.dao.UserDao"  >
     <select id="findAll" resultType="com.Test.table.User" parameterType="java.util.HashMap">
-SELECT * FROM User  where 1=1
+SELECT * FROM user  where 1=1
        <if test="xuhao != null">
          and  xuhao=#{xuhao}
        </if>

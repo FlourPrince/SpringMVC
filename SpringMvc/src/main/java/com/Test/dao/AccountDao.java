@@ -1,10 +1,12 @@
-package com.Test.Service;
-
+package com.Test.dao;
 
 import java.util.List;
 
 import com.Test.table.Account;
 
-public interface AccountService {
+public interface AccountDao {
+
+	
+	
 	public List<Account> findAll();
 }

@@ -1,26 +1,31 @@
 package com.Test.Tools;
 
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Bean;
 
-public class MySqlSessionTemplate {
-	private SqlSessionTemplate template ;
+/**
+ *     
+ * @author lenovo
+ *
+ */
+
+public  class MySqlSessionTemplate implements ApplicationContextAware {
+
+	private SqlSessionTemplate template;
+
+	@Override
+	public void setApplicationContext(ApplicationContext arg0) throws BeansException {
+		if (template == null) {
+			template = arg0.getBean(SqlSessionTemplate.class);
+		}
+
+	}
+	
 	public SqlSessionTemplate getSqlSessionTemplate() {
 		return template;
 	}
-	public void setSqlSessionTemplate(SqlSessionTemplate template) {
-		this.setSqlSessionTemplate(template);
-	}
-	
-	public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
-		if(template==null) {
-			template=createSqlSessionTemplate(sqlSessionFactory);
-		}
-	}
-	
-	public SqlSessionTemplate createSqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
-		
-		return new SqlSessionTemplate(sqlSessionFactory);
-	}
-	
+
 }

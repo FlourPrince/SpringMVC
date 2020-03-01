@@ -15,12 +15,16 @@ public class UserServiceImpl  implements UserService {
     @Override
     public List<User> findAll() {
     	
-    	
-        System.out.println("UserServiceImpl+++++++++");
         return userDao.findAll();
     }
-    /**
-              * 注册账号
-     */
+	@Override
+	public User findByName(String name) {
+		return userDao.findByName(name);
+	}
+	@Override
+	public void insertUser(User user) {
+		userDao.insertUser(user);
+	}
+    
     
 }

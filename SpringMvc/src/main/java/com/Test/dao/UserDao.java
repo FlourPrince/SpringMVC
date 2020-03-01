@@ -12,6 +12,17 @@ public interface UserDao {
    * 查询所有
    * 
    */
-	 //@Select("SELECT * FROM User ")
-	List<User> findAll();
+	public List<User> findAll();
+	/**
+	 * 
+     * 根据用户名查询用户
+	 */
+	public User findByName(String name);
+	
+	/**
+	 * 新增用户
+	 * 
+	 */
+	public void insertUser(User user);
+	
 }

@@ -3,12 +3,26 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.Test.dao.UserDao"  >
+  <!-- 参数类型  返回值类型 自定义 -->
+  <!-- <parameterMap type="" id=""></parameterMap>
+  <resultMap type="" id=""></resultMap> -->
     <select id="findAll" resultType="com.Test.table.User" parameterType="java.util.HashMap">
-SELECT * FROM user  where 1=1
-       <if test="xuhao != null">
-         and  xuhao=#{xuhao}
-       </if>
+   select * from  user 
     </select>
     
+    <select id="findByName"  resultType="com.Test.table.User" parameterType="java.util.HashMap">
+      select * from user 
+      <where>
+	       <if test =" username !=null ">
+	           and username=#{username}
+	        </if>
+      </where>
+     </select>
+     
+     <select id="insertUser"  parameterType="com.Test.table.User" >
+       insert into user  (xuhao,username,password)  value(#{xuhao}, #{username},#{password})
+     </select>
+     
+           
   </mapper>
   

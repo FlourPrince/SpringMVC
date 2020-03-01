@@ -1,56 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context" 
-      xmlns:tx="http://www.springframework.org/schema/tx" 
-       xsi:schemaLocation="
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-        http://www.springframework.org/schema/tx 
-http://www.springframework.org/schema/tx/spring-tx.xsd">
-      <!--配置连接池-->
-      <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
-            <property name="driverClass" value="${jdbc.driver}"/>
-            <property name="jdbcUrl" value="${jdbc.url}"/>
-            <property name="user" value="${jdbc.username}"/>
-            <property name="password" value="${jdbc.password}"/>
-      </bean>
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!--配置连接池 -->
+	<bean id="dataSource"  class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		 <!-- 连接池参数 -->
+       <!--初始化连接数量-->
+       <property name="initialPoolSize" value="5"></property>
+       <!--最大的连接数量-->
+       <property name="maxPoolSize" value="10"></property>
+       <!--连接超时时间-->
+       <property name="checkoutTimeout" value="3000"></property>
+	</bean>
 
-      <!--配置sqlSesiionFactory工厂-->
-      <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-            <property name="dataSource" ref="dataSource"/>
-            <property name="configLocation" value="com/Test/sqlMapConfig/sqlMapConfig.xml" />
-      </bean>
- <!--配置sqlSessionTemplate：通过带参数的构造方法创建对象 -->
-<!--     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-        以sqlSessionFactory为参数传入构造函数中
-         <constructor-arg ref="sqlSessionFactory" />
-         mybatis执行器，取值范围是SIMPLE/REUSE/BATCH三种类型
-         <constructor-arg value="SIMPLE" />
- </bean> -->
-     <bean id="userDao" class="com.Test.daoImpl.UserDaoImpl">
-       <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
-     </bean>
-    
-    <!--配置dao接口扫描 -->
-   <!-- <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-         <property name="basePackage" value="com.Test.dao"></property>
-   </bean> -->
-     <!-- 配置Spring框架声明式事务管理器 -->
-          <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-             <property name="dataSource" ref="dataSource"></property>
-          </bean>
-         <!-- 配置事务通知 -->
-         <tx:advice id="txAdvice" transaction-manager="transactionManager">
-            <tx:attributes>
-              <tx:method name="find*" read-only="true" />
-            </tx:attributes>
-         
-         </tx:advice>
-          <!-- 配置AOP增强 -->
-          <aop:config>
-             <aop:advisor advice-ref="txAdvice" pointcut="execution(* com.Test.ServiceImpl.*.*(..))" />
-          </aop:config>
+	<!--配置sqlSesiionFactory工厂 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="sqlMapConfig.xml" />
+	</bean>
+	<!-- sqlSessionTemplate配置 -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype" >
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+   
+	<!--配置dao接口扫描 -->
+	<!-- <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer"> 
+		<property name="basePackage" value="com.Test.dao"></property> </bean> -->
+		
+	<!-- 配置Spring框架声明式事务管理器 -->
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!-- 配置事务通知 -->
+
+	<!-- 配置AOP增强 -->
+	<aop:config>
+	    <aop:pointcut id="ptl1" expression="execution(*  com.Ioc.serviceImpl.*.*(..))" />
+		<aop:aspect id="txAdvice"  ref="transactionManager" >
+		    <!-- 前置开启事务 -->
+		   <aop:before method="doBegin" pointcut-ref="ptl1"/>
+		   <!-- 提交事务 -->
+		   <aop:after-returning method="doCommit" pointcut-ref="ptl1"/>
+		   <!-- 回滚事务 -->
+		   <aop:after-throwing method="doRollback" pointcut-ref="ptl1"/>
+		   <!--释放连接-->
+		   <aop:after method="doCleanupAfterCompletion" pointcut-ref="ptl1"/>
+		</aop:aspect>
+	</aop:config>
 </beans>

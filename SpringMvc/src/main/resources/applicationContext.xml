@@ -27,7 +27,7 @@
 	<!--配置sqlSesiionFactory工厂 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="sqlMapConfig.xml" />
+		<property name="configLocation" value="classpath:sqlMapConfig.xml" />
 	</bean>
 	<!-- sqlSessionTemplate配置 -->
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype" >
@@ -38,25 +38,34 @@
 	<!-- <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer"> 
 		<property name="basePackage" value="com.Test.dao"></property> </bean> -->
 		
-	<!-- 配置Spring框架声明式事务管理器 -->
+	<!-- 配置Spring框架声明式事务管理器  xml-->
+	    <!-- 
+	                1.配置事务管理器  org.springframework.jdbc.datasource.DataSourceTransactionManager
+	                2.配置事务通知   tx:advice 定义唯一id标识
+	                3.配置切入点表达式 aop:pointcut
+	                4.aop:advisor配置AOP切面
+	                5.配置事务的属性 tx:method
+	     -->
 	
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	<!-- 配置事务通知 -->
-
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	 <tx:attributes> 
+	   <tx:method name="*"  propagation="REQUIRED" read-only="false"/>
+	 </tx:attributes>
+	</tx:advice>
 	<!-- 配置AOP增强 -->
 	<aop:config>
-	    <aop:pointcut id="ptl1" expression="execution(*  com.Ioc.serviceImpl.*.*(..))" />
-		<aop:aspect id="txAdvice"  ref="transactionManager" >
-		    <!-- 前置开启事务 -->
-		   <aop:before method="doBegin" pointcut-ref="ptl1"/>
-		   <!-- 提交事务 -->
-		   <aop:after-returning method="doCommit" pointcut-ref="ptl1"/>
-		   <!-- 回滚事务 -->
-		   <aop:after-throwing method="doRollback" pointcut-ref="ptl1"/>
-		   <!--释放连接-->
-		   <aop:after method="doCleanupAfterCompletion" pointcut-ref="ptl1"/>
-		</aop:aspect>
+            <aop:pointcut id="ptl1" expression="execution(*  com.Test.ServiceImpl.*.*(..))" />
+		 <aop:advisor advice-ref="txAdvice" pointcut-ref="ptl1"/>
 	</aop:config>
+	
+	<!-- 配置Spring框架声明式事务管理器 注解 -->
+	   <!--   
+	      1.配置事务管理器  org.springframework.jdbc.datasource.DataSourceTransactionManager
+	      2.开启tx扫描注解 	<tx:annotation-driven  transaction-manager="transactionManager"/>
+	      3.在需要事务控制的地方使用@Transactional 注解
+	    -->
 </beans>

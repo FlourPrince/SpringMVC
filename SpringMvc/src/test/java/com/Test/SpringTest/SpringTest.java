@@ -81,20 +81,27 @@ public class SpringTest {
     	  User user =userService.findByName("李四");
     	  System.out.println(user.toString());
       }
+      /**
+       * 
+       * @Author pansw
+       *         <p>
+       *         <li>2020年3月2日-上午12:07:48</li>
+       *         <li>功能说明：测试事务控制</li>
+       *         </p>
+       */
       @Test
       public void test6(){
-    	  //新增用户
-    	  User user =new User();
-    	  user.setXuhao(4);
-    	  user.setUsername("刘六");
-    	  user.setPassword("123");
-    	  userService.insertUser(user);
-                 
-    	  int i=1/0;
-    	  user.setXuhao(5);
-    	  user.setUsername("刘7");
-    	  user.setPassword("123");
-    	  userService.insertUser(user);
+    	  //
+    	  User user1 =new User();
+    	  user1.setXuhao(4);
+    	  user1.setUsername("刘六");
+    	  user1.setPassword("123");
+    	  
+    	  User user2 =new User();
+    	  user2.setXuhao(5);
+    	  user2.setUsername("刘7");
+    	  user2.setPassword("123");
+    	  userService.tranferUser(user1,user2);
     	  
       }
 }

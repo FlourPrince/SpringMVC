@@ -10,4 +10,6 @@ public interface UserService {
     public User findByName(String name);
 	
 	public void insertUser(User user);
+	
+	public  void tranferUser(User user ,User user2);
 }

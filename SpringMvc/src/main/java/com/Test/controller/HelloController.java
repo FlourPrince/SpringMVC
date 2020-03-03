@@ -22,6 +22,7 @@ public class HelloController {
 
 		List<User> userList=userService.findAll();
 System.out.println(userList.toString());
+
 		return "success";
 	}
 

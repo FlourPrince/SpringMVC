@@ -9,6 +9,7 @@
     <select id="findAll" resultType="com.Test.table.User" parameterType="java.util.HashMap">
    select * from  user 
     </select>
+
     
     <select id="findByName"  resultType="com.Test.table.User" parameterType="java.util.HashMap">
       select * from user 
@@ -18,9 +19,10 @@
 	        </if>
       </where>
      </select>
-     
+
      <select id="insertUser"  parameterType="com.Test.table.User" >
        insert into user  (xuhao,username,password)  value(#{xuhao}, #{username},#{password})
+
      </select>
      
            

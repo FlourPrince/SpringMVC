@@ -26,6 +26,8 @@
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"></bean>
      <!-- 配置处理器适配器 -->
      <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"></bean>
+       <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+     </bean>
       <!-- 开启mvc注解-->
     <mvc:annotation-driven/>
 

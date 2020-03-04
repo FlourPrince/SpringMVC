@@ -9,22 +9,62 @@
     <select id="findAll" resultType="com.Test.table.User" parameterType="java.util.HashMap">
    select * from  user 
     </select>
-
     
-    <select id="findByName"  resultType="com.Test.table.User" parameterType="java.util.HashMap">
+    <select id="findById"  resultType="com.Test.table.User" parameterType="java.util.HashMap">
       select * from user 
       <where>
-	       <if test =" username !=null ">
-	           and username=#{username}
+	       <if test =" xuhao !=null ">
+	           and xuhao=#{xuhao}
 	        </if>
+      </where>
+     </select>
+
+  <select id="findByIdForUpdate"  resultType="com.Test.table.User" parameterType="java.util.HashMap">
+      select * from user 
+      <where>
+	       <if test =" xuhao !=null ">
+	           and xuhao=#{xuhao}
+	        </if>
+	        for update 
       </where>
      </select>
 
      <select id="insertUser"  parameterType="com.Test.table.User" >
        insert into user  (xuhao,username,password)  value(#{xuhao}, #{username},#{password})
-
      </select>
      
-           
+     <delete id="deleteUser" parameterType="com.Test.table.User">
+          delete * from user 
+          <where>
+             xuhao=#{xuhao}
+          </where>
+     </delete>
+     
+     <update id="updateUser" parameterType="com.Test.table.User">
+        update user 
+        <if test="username !=null">
+                <set> username=#{username}, </set>
+        </if>
+      <if test="password !=null">
+                <set> password=#{password} </set>
+        </if>
+        <where>
+           xuhao=#{xuhao}
+        </where>
+     </update>  
+         
+      <update id="updateUser" parameterType="com.Test.table.User">
+        update user 
+        <if test="username !=null">
+                <set> username=#{username}, </set>
+        </if>
+      <if test="password !=null">
+                <set> password=#{password} </set>
+        </if>
+        <where>
+           xuhao=#{xuhao}
+        </where>
+         for update
+     </update>      
   </mapper>
   

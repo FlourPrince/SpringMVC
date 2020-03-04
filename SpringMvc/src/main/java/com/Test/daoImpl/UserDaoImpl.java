@@ -18,15 +18,39 @@ public class UserDaoImpl extends  MySqlSessionTemplate  implements UserDao {
 	}
 
 	@Override
-	public User findByName(String name) {
-		HashMap map=new HashMap<>();
-		 map.put("username", name);
-		User user=getSqlSessionTemplate().selectOne("com.Test.dao.UserDao.findByName", map);
+	public User findById(int id) {
+		 HashMap map=new HashMap<>();
+		 map.put("xuhao", id);
+		User user=getSqlSessionTemplate().selectOne("com.Test.dao.UserDao.findById", map);
 		return user;
 	}
+
+
+	@Override
+	public User findByIdForUpdate(int id) {
+		 HashMap map=new HashMap<>();
+		 map.put("xuhao", id);
+		User user=getSqlSessionTemplate().selectOne("com.Test.dao.UserDao.findByIdForUpdate", map);
+		return user;
+	}
+	
 	@Override
 	public void insertUser(User user) {
-		System.out.println(user);
 		getSqlSessionTemplate().insert("com.Test.dao.UserDao.insertUser", user);
+	}
+	
+	@Override
+	public void deleteUser(User user) {
+		getSqlSessionTemplate().delete("com.Test.dao.UserDao.deleteUser",user);
+	}
+
+	@Override
+	public void updateUser(User user) {
+		getSqlSessionTemplate().update("com.Test.dao.UserDao.updateUser",user);
+	}
+
+	@Override
+	public void updateUserForUpdate(User user) {
+		getSqlSessionTemplate().update("com.Test.dao.UserDao.updateUserForUpdate",user);
 	}
 }

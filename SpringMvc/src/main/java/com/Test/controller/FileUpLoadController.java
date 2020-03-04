@@ -32,37 +32,35 @@ public class FileUpLoadController {
 	 */
 	@RequestMapping("/fileupload1")
 	public String fileupload(HttpServletRequest request) throws Exception {
-		//使用fileupload组件文件上传
- 
+		// 使用fileupload组件文件上传
+
 		System.out.println("文件上传进来了");
-		String pathString=request.getSession().getServletContext().getRealPath("/uploads");
-		
-		  System.out.println(pathString);
-		  
-		File file=new File(pathString);
-		if(!file.exists()) {
-			//不存在 ，创建该文件
+		String pathString = request.getSession().getServletContext().getRealPath("/uploads");
+
+		System.out.println(pathString);
+
+		File file = new File(pathString);
+		if (!file.exists()) {
+			// 不存在 ，创建该文件
 			file.mkdirs();
 		}
-		//解析request对象，获取上传文件项
-		DiskFileItemFactory factory=new DiskFileItemFactory();
-		ServletFileUpload upload=new ServletFileUpload(factory);
-		//解析request
-		List<FileItem> itmes=upload.parseRequest(request);
+		// 解析request对象，获取上传文件项
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		// 解析request
+		List<FileItem> itmes = upload.parseRequest(request);
 		System.out.println(itmes.toString());
-		for(FileItem fileItem :itmes) {
-			if(fileItem.isFormField()) {
-				//普通表单项
+		for (FileItem fileItem : itmes) {
+			if (fileItem.isFormField()) {
+				// 普通表单项
 			}
 			else {
-				String filename=fileItem.getName();
-				fileItem.write(new File(pathString,filename));
-				//fileItem.delete();
+				String filename = fileItem.getName();
+				fileItem.write(new File(pathString, filename));
+				// fileItem.delete();
 			}
 		}
-		
-		
-		
+
 		return "success";
 	}
 
@@ -78,24 +76,24 @@ public class FileUpLoadController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/fileupload2")
-	public String fileupload2(HttpServletRequest request,MultipartFile upload) throws Exception {
-		//使用fileupload组件文件上传
- 
+	public String fileupload2(HttpServletRequest request, MultipartFile upload) throws Exception {
+		// 使用fileupload组件文件上传
+
 		System.out.println("SpringMVC文件上传进来了");
-		String pathString=request.getSession().getServletContext().getRealPath("/uploads");
-		
-		  System.out.println(pathString);
-		  
-		File file=new File(pathString);
-		if(!file.exists()) {
-			//不存在 ，创建该文件
+		String pathString = request.getSession().getServletContext().getRealPath("/uploads");
+
+		System.out.println(pathString);
+
+		File file = new File(pathString);
+		if (!file.exists()) {
+			// 不存在 ，创建该文件
 			file.mkdirs();
 		}
-		//解析request对象，获取上传文件项
-				String filename=upload.getOriginalFilename();
-				String uuid= UUID.randomUUID().toString().replace("-", "");
-				filename=uuid+filename;
-				upload.transferTo(new File(pathString, filename));
+		// 解析request对象，获取上传文件项
+		String filename = upload.getOriginalFilename();
+		String uuid = UUID.randomUUID().toString().replace("-", "");
+		filename = uuid + filename;
+		upload.transferTo(new File(pathString, filename));
 		return "success";
 	}
 	/**
@@ -112,20 +110,20 @@ public class FileUpLoadController {
 	 */
 	@RequestMapping("/fileupload3")
 	public String fileupload3(MultipartFile upload) throws Exception {
- 
-	    //定义上传文件服务器的路劲
-		String path="http://localhost:9090/uploads/";
-		  
-		//解析request对象，获取上传文件项
-				String filename=upload.getOriginalFilename();
-				String uuid= UUID.randomUUID().toString().replace("-", "");
-				filename=uuid+filename;
-			Client	 client=Client.create();
-			
-		  WebResource wb=	client.resource(filename);
-		  
-		  wb.put(upload.getBytes());
-				
+
+		// 定义上传文件服务器的路劲
+		String path = "http://localhost:9090/uploads/";
+
+		// 解析request对象，获取上传文件项
+		String filename = upload.getOriginalFilename();
+		String uuid = UUID.randomUUID().toString().replace("-", "");
+		filename = uuid + filename;
+		Client client = Client.create();
+
+		WebResource wb = client.resource(filename);
+
+		wb.put(upload.getBytes());
+
 		return "success";
 	}
 	

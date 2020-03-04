@@ -16,7 +16,7 @@ public interface UserService {
 	 */
 	public User findById(int id);
 	/**
-	 * 解锁查询
+	  * 加锁查询
 	 * 
 	 */
 	public User findByIdForUpdate(int id);
@@ -38,8 +38,5 @@ public interface UserService {
 	 * 更新客户信息
 	 */
 	public void updateUser(User user);
-	/**
-	 * 加锁更新客户信息
-	 */
-	public void updateUserForUpdate(User user);
+
 }

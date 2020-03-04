@@ -49,8 +49,5 @@ public class UserDaoImpl extends  MySqlSessionTemplate  implements UserDao {
 		getSqlSessionTemplate().update("com.Test.dao.UserDao.updateUser",user);
 	}
 
-	@Override
-	public void updateUserForUpdate(User user) {
-		getSqlSessionTemplate().update("com.Test.dao.UserDao.updateUserForUpdate",user);
-	}
+
 }

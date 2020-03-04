@@ -26,7 +26,6 @@ public class UserServiceImpl  implements UserService {
     @Override
     public  void tranferUser(User user ,User user2) {
     	  userDao.insertUser(user);
-    	int i=1/0;
     	  userDao.insertUser(user);
     }
 	@Override
@@ -44,9 +43,5 @@ public class UserServiceImpl  implements UserService {
 	@Override
 	public void updateUser(User user) {
 		userDao.updateUser(user);
-	}
-	@Override
-	public void updateUserForUpdate(User user) {
-		userDao.updateUserForUpdate(user);
 	}
 }

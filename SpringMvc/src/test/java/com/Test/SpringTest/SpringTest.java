@@ -78,7 +78,7 @@ public class SpringTest {
       @Test
       public void test5() {
     	  //根据用户名查询用户
-    	  User user =userService.findByName("李四");
+    	  User user =userService.findById(1);
     	  System.out.println(user.toString());
       }
       /**
@@ -102,6 +102,11 @@ public class SpringTest {
     	  user2.setUsername("刘7");
     	  user2.setPassword("123");
     	  userService.tranferUser(user1,user2);
-    	  
+      }
+      @Test
+      public void test7(){
+    	  User user= userService.findByIdForUpdate(1);
+    	  user.setPassword("777");
+    	  userService.updateUser(user);
       }
 }

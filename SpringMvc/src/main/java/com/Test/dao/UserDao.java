@@ -37,8 +37,5 @@ public interface UserDao {
 	 * 更新客户信息
 	 */
 	public void updateUser(User user);
-	/**
-	 * 加锁更新客户信息
-	 */
-	public void updateUserForUpdate(User user);
+
 }

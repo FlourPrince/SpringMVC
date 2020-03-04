@@ -39,32 +39,18 @@
              xuhao=#{xuhao}
           </where>
      </delete>
-     
-     <update id="updateUser" parameterType="com.Test.table.User">
-        update user 
-        <if test="username !=null">
-                <set> username=#{username}, </set>
-        </if>
-      <if test="password !=null">
-                <set> password=#{password} </set>
-        </if>
-        <where>
-           xuhao=#{xuhao}
-        </where>
-     </update>  
-         
-      <update id="updateUser" parameterType="com.Test.table.User">
-        update user 
-        <if test="username !=null">
-                <set> username=#{username}, </set>
-        </if>
-      <if test="password !=null">
-                <set> password=#{password} </set>
-        </if>
-        <where>
-           xuhao=#{xuhao}
-        </where>
-         for update
-     </update>      
+
+	<update id="updateUser" parameterType="com.Test.table.User">
+	update user
+	<set>
+		<if test="username !=null">
+			username=#{username},
+		</if>
+		<if test="password !=null">
+			password=#{password},
+		</if>
+	</set>
+	where xuhao=#{xuhao}
+    </update>
   </mapper>
   

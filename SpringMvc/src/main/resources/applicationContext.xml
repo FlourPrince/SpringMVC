@@ -58,7 +58,7 @@
 	</tx:advice>
 	<!-- 配置AOP增强 -->
 	<aop:config>
-            <aop:pointcut id="ptl1" expression="execution(*  com.Test.ServiceImpl.*.*(..))" />
+            <aop:pointcut id="ptl1" expression="execution(*  com.Test.*.*.*(..))" />
 		 <aop:advisor advice-ref="txAdvice" pointcut-ref="ptl1"/>
 	</aop:config>
 	
@@ -68,4 +68,6 @@
 	      2.开启tx扫描注解 	<tx:annotation-driven  transaction-manager="transactionManager"/>
 	      3.在需要事务控制的地方使用@Transactional 注解
 	    -->
+	    
+	    <import resource="spring.xml"/>
 </beans>

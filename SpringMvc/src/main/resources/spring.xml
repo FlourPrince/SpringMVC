@@ -17,7 +17,7 @@
       </context:component-scan>
       
    <context:property-placeholder location="classpath:dataSource.properties" />
-   
-   <task:annotation-driven/>
+   <!-- 定时任务配置 本地起测试类的时候，需要去除 -->
+ <!--   <task:annotation-driven/> -->
 
 </beans>

@@ -3,7 +3,13 @@
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
   <configuration>
-  
+   <settings>
+        <!--<setting name="logImpl" value="LOG4J" />-->
+        <!--<setting name="logImpl" value="STDOUT_LOGGING" />-->
+        <setting name="logImpl" value="LOG4J" />
+        <setting name="logPrefix" value="dao."/>
+    </settings>
+
     <mappers>
     <mapper resource="com/Test/dao/UserDao.xml"/>
     <mapper resource="com/Test/dao/AccountDao.xml"/>
